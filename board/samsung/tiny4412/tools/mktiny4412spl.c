@@ -62,6 +62,8 @@ int main(int argc, char **argv)
 	len = lseek(ifd, 0, SEEK_END);
 	lseek(ifd, 0, SEEK_SET);
 
+    count = (len < IMG_SIZE) ? len : IMG_SIZE ; //14K-4
+
 	if (read(ifd, buffer , count) != count) {
 		fprintf(stderr, "%s: Can't read %s: %s\n",
 			argv[0], argv[1], strerror(errno));

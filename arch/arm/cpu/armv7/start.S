@@ -60,7 +60,7 @@ switch_to_hypervisor_ret:
 	orrne	r0, r0, #0x13		@ set SVC mode
 	orr	r0, r0, #0xc0		@ disable FIQ and IRQ
 	msr	cpsr,r0
-
+    
 /*
  * Setup vector:
  * (OMAP4 spl TEXT_BASE is not 32 byte aligned.
@@ -84,7 +84,7 @@ switch_to_hypervisor_ret:
 	bl	cpu_init_crit
 #endif
 #endif
-
+    bl light_led
 	bl	_main
 
 /*------------------------------------------------------------------------------*/
@@ -293,3 +293,13 @@ ENTRY(cpu_init_crit)
 	b	lowlevel_init		@ go setup pll,mux,memory
 ENDPROC(cpu_init_crit)
 #endif
+    .globl light_led
+light_led:
+    ldr r0,=0x110002E0
+    ldr r1,=0x00001111
+    str r1,[r0]
+
+    ldr r0,=0x110002E4
+    mov r1,#0xF0
+    str r1,[r0]
+    mov pc,lr
