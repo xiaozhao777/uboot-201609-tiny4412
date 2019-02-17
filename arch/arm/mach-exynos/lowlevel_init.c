@@ -229,7 +229,34 @@ int do_lowlevel_init(void)
         printascii("UART0 init ... OK !!!\n\r");
 #endif
 		mem_ctrl_init(actions & DO_MEM_RESET);
-		tzpc_init();
+
+       writel(0x44444444, 0x40000000);
+       if(readl(0x40000000) == 0x44444444)
+       printascii("addriss is :0x40000000 ;value is 0x44444444... !!!\n\r");
+
+       writel(0x55555555, 0x50000004);
+       if(readl(0x50000004) == 0x55555555)
+       printascii("addriss is :0x50000004 ;value is 0x55555555... !!!\n\r");
+      
+       writel(0x66666666, 0x60000000);
+       if(readl(0x60000000) == 0x66666666)
+       printascii("addriss is :0x60000000 ;value is 0x66666666... !!!\n\r");
+       
+       writel(0x77777777, 0x70000000);
+       if(readl(0x70000000) == 0x77777777)
+       printascii("addriss is :0x70000000 ;value is 0x77777777... !!!\n\r");
+		
+       writel(0x88888888, 0x70000001);
+       if(readl(0x70000001) == 0x88888888)
+       printascii("addriss is :0x70000001 ;value is 0x88888888... !!!\n\r");
+       
+       writel(0x88888888, 0x7000000f);
+       if(readl(0x7000000f) == 0x88888888)
+       printascii("addriss is :0x7000000f ;value is 0x88888888... !!!\n\r");
+
+       #ifndef TINY4412
+       tzpc_init();
+       #endif
 	}
 
 	return actions & DO_WAKEUP;
