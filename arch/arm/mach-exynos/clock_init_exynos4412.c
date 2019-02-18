@@ -107,14 +107,14 @@ void system_clock_init(void)
        /*
         * Set dividers for MOUTcore
         * MOUTcore     =   MOUTapll = 1400 MHz
-        * SCLKapll     =   MOUTapll / (APLL_RATIO  1) = 700 MHz (DIVapll:APLL_RATIO=1)
-        * ARMCLK       =   MOUTcore / (ratio  1) = 1400 MHz (DIVcore:CORE_RATIO=0;DIVcore2:CORE2_RATIO=0)
-        * ACLK_COREM0  =   ARMCLK / (COREM0_RATIO  1) = 355 MHz (DIVcorem0:COREM0_RATIO=3)
-        * ACLK_COREM1  =   ARMCLK / (COREM1_RATIO  1) = 188 MHz (DIVcorem1:COREM1_RATIO=7)
-        * PERIPHCLK    =   ARMCLK / (PERIPH_RATIO  1) = 1400 MHz (DIVperiph:PERIPH_RATIO=0)
-        * OUTatb       =   MOUTcore / (ATB_RATIO  1) = 200 MHz (DIVatb:ATB_RATIO=6)
+        * SCLKapll     =   MOUTapll / (APLL_RATIO + 1) = 700 MHz (DIVapll:APLL_RATIO=1)
+        * ARMCLK       =   MOUTcore / (ratio  + 1) = 1400 MHz (DIVcore:CORE_RATIO=0;DIVcore2:CORE2_RATIO=0)
+        * ACLK_COREM0  =   ARMCLK / (COREM0_RATIO + 1) = 355 MHz (DIVcorem0:COREM0_RATIO=3)
+        * ACLK_COREM1  =   ARMCLK / (COREM1_RATIO + 1) = 188 MHz (DIVcorem1:COREM1_RATIO=7)
+        * PERIPHCLK    =   ARMCLK / (PERIPH_RATIO + 1) = 1400 MHz (DIVperiph:PERIPH_RATIO=0)
+        * OUTatb       =   MOUTcore / (ATB_RATIO  + 1) = 200 MHz (DIVatb:ATB_RATIO=6)
         * ATCLK        =   OUTatb = 200 MHz
-        * PCLK_DBG     = OUTatb / (PCLK_DBG_RATIO  1) = 100 MHz (PCLK_DBG_RATIO=1)
+        * PCLK_DBG     = OUTatb / (PCLK_DBG_RATIO + 1) = 100 MHz (PCLK_DBG_RATIO=1)
        */
    clr = APLL_RATIO(7) |CORE_RATIO(7)| CORE2_RATIO(7)|
            COREM0_RATIO(7) | COREM1_RATIO(7) |
@@ -130,9 +130,9 @@ void system_clock_init(void)
 
        /* Set dividers for MOUThpm
         * MOUThpm =    MOUTapll = 1400 MHz
-        * OUTcopy =    MOUThpm / (COPY_RATIO  1) = 200 (DIVcopy:COPY_RATIO=6)
-        * sclkhpm =    OUTcopy / (HPM_RATIO  1) = 200 (DIVhpm:HPM_RATIO=0)
-        * ACLK_CORES = ARMCLK / (CORES_RATIO  1) = 233 (DIVcores:CORES_RATIO=5)
+        * OUTcopy =    MOUThpm / (COPY_RATIO + 1) = 200 (DIVcopy:COPY_RATIO=6)
+        * sclkhpm =    OUTcopy / (HPM_RATIO + 1) = 200 (DIVhpm:HPM_RATIO=0)
+        * ACLK_CORES = ARMCLK / (CORES_RATIO + 1) = 233 (DIVcores:CORES_RATIO=5)
         */
    clr = COPY_RATIO(7) | HPM_RATIO(7) | CORES_RATIO(7);
    set = COPY_RATIO(6) | HPM_RATIO(0) | CORES_RATIO(5);
@@ -151,12 +151,12 @@ void system_clock_init(void)
         * MOUTdmc_bus  = SCLKmpll = 800 MHz
         * MOUTdphy = SCLKmpll = 800 MHz
         *
-        * SCLK_DMC = MOUTdmc_bus / (DMC_RATIO  1) = 400MHz (DIVdmc:DMC_RATIO=1)
-        * ACLK_DMCD = SCLK_DMC / (DMCD_RATIO  1) = 200MHz  (DIVdmcd:DMCD_RATIO=1)
-        * ACLK_DMCP = ACLK_DMCD / (DMCP_RATIO  1) = 100MHz (DIVdmcp:DMCP_RATIO=1)
-        * ACLK_ACP = MOUTdmc_bus / (ACP_RATIO  1) = 200MHz (DIVacp:ACP_RATIO=3)
-        * PCLK_ACP = ACLK_ACP / (ACP_PCLK_RATIO  1) = 100MHz (DIVacp_pclk:ACP_PCLK_RATIO=1)
-        * SCLK_DPHY = MOUTdphy / (DPHY_RATIO  1) = 400MHz (DIVdphy:DPHY_RATIO=1)
+        * SCLK_DMC = MOUTdmc_bus / (DMC_RATIO + 1) = 400MHz (DIVdmc:DMC_RATIO=1)
+        * ACLK_DMCD = SCLK_DMC / (DMCD_RATIO + 1) = 200MHz  (DIVdmcd:DMCD_RATIO=1)
+        * ACLK_DMCP = ACLK_DMCD / (DMCP_RATIO + 1) = 100MHz (DIVdmcp:DMCP_RATIO=1)
+        * ACLK_ACP = MOUTdmc_bus / (ACP_RATIO + 1) = 200MHz (DIVacp:ACP_RATIO=3)
+        * PCLK_ACP = ACLK_ACP / (ACP_PCLK_RATIO + 1) = 100MHz (DIVacp_pclk:ACP_PCLK_RATIO=1)
+        * SCLK_DPHY = MOUTdphy / (DPHY_RATIO + 1) = 400MHz (DIVdphy:DPHY_RATIO=1)
         */
    clr = DMC_RATIO(7) | DMCD_RATIO(7) | DMCP_RATIO(7) |
                ACP_RATIO(7) | ACP_PCLK_RATIO(7) | DPHY_RATIO(7);
@@ -175,12 +175,12 @@ void system_clock_init(void)
         * MOUTpwi = SCLKmpll = 800 MHz
         * MOUTg2d_acp = SCLKmpll = 800 MHz
         *
-        * SCLK_C2C = MOUTc2c / (C2C_RATIO  1) = 400MHz (DIVc2c:C2C_RATIO=1)
-        * ACLK_C2C = SCLK_C2C / (C2C_ACLK_RATIO  1) = 200MHz (DIVc2c_aclk:C2C_ACLK_RATIO=1)
-        * SCLK_PWI = MOUTpwi / (PWI_RATIO  1) = 100MHz (DIVpwi:PWI_RATIO=7)
-        * SCLK_G2D_ACP = MOUTg2d_acp / (G2D_ACP_RATIO  1) = 200MHz (G2D_ACP_RATIO=3)
-        * IECDPMCLKEN = ACLK_DMCP/( DPM_RATIO 1) = 50MHz(DIVdpm:DPM_RATIO=1)
-        * IECDVSEMCLKEN = ACLK_DMCP/( DVSEM_RATIO 1) = 50MHz(DIVdvsem:DVSEM_RATIO=1)
+        * SCLK_C2C = MOUTc2c / (C2C_RATIO + 1) = 400MHz (DIVc2c:C2C_RATIO=1)
+        * ACLK_C2C = SCLK_C2C / (C2C_ACLK_RATIO + 1) = 200MHz (DIVc2c_aclk:C2C_ACLK_RATIO=1)
+        * SCLK_PWI = MOUTpwi / (PWI_RATIO + 1) = 100MHz (DIVpwi:PWI_RATIO=7)
+        * SCLK_G2D_ACP = MOUTg2d_acp / (G2D_ACP_RATIO + 1) = 200MHz (G2D_ACP_RATIO=3)
+        * IECDPMCLKEN = ACLK_DMCP/( DPM_RATIO + 1) = 50MHz(DIVdpm:DPM_RATIO=1)
+        * IECDVSEMCLKEN = ACLK_DMCP/( DVSEM_RATIO + 1) = 50MHz(DIVdvsem:DVSEM_RATIO=1)
         */
    clr = C2C_RATIO(7) | C2C_ACLK_RATIO(7) | PWI_RATIO(15) |
                G2D_ACP_RATIO(15) | DVSEM_RATIO(127) | DPM_RATIO(127);
@@ -198,19 +198,19 @@ void system_clock_init(void)
         * Set CLK_DIV_TOP
         * SCLKmll_user_t = SCLKmpll = 800 MHz
         * MOUTACLK_400_MC = SCLKmpll = 800 MHz
-        * MOUTACLK_400_MCUISP = MOUTACLK_400_MC/(ACLK_400_MCUISP_RATIO  1) = 400MHz (DIVaclk_400_mc:ACLK_400_MCUISP_RATIO=1)
+        * MOUTACLK_400_MCUISP = MOUTACLK_400_MC/(ACLK_400_MCUISP_RATIO + 1) = 400MHz (DIVaclk_400_mc:ACLK_400_MCUISP_RATIO=1)
         * MOUTACLK_200 = SCLKmpll = 800 MHz
-        * ACLK_200 = MOUTACLK_200/(ACLK_200_RATIO  1) = 160MHz (DIVaclk_200:ACLK_200_RATIO=4)
+        * ACLK_200 = MOUTACLK_200/(ACLK_200_RATIO + 1) = 160MHz (DIVaclk_200:ACLK_200_RATIO=4)
         * MOUTACLK_266_gps = SCLKmpll = 800 MHz
-        * ACLK_266_GPS = [MOUTACLK_266_GPS /(ACLK_266_GPS_RATIO  1)] = 266MHz (DIVaclk_266_gps:ACLK_266_GPS_RATIO=2)
+        * ACLK_266_GPS = [MOUTACLK_266_GPS /(ACLK_266_GPS_RATIO + 1)] = 266MHz (DIVaclk_266_gps:ACLK_266_GPS_RATIO=2)
         * MOUTACLK_100 = SCLKmpll = 800 MHz
-        * ACLK_100 = [MOUTACLK_100/(ACLK_100_RATIO  1)] = 100MHz (DIVaclk_100:ACLK_100_RATIO=7)
+        * ACLK_100 = [MOUTACLK_100/(ACLK_100_RATIO + 1)] = 100MHz (DIVaclk_100:ACLK_100_RATIO=7)
         * MOUTACLK_160 = SCLKmpll = 800 MHz
-        * ACLK_160 = [MOUTACLK_160 /(ACLK_160_RATIO  1)] = 160MHz (DIVaclk_160:ACLK_160_RATIO=4)
+        * ACLK_160 = [MOUTACLK_160 /(ACLK_160_RATIO + 1)] = 160MHz (DIVaclk_160:ACLK_160_RATIO=4)
         * MOUTACLK_133 = SCLKmpll = 800 MHz
-        * ACLK_133 = [MOUTACLK_133 /(ACLK_133_RATIO  1)] = 133MHz (DIVaclk_133:ACLK_133_RATIO=5)
+        * ACLK_133 = [MOUTACLK_133 /(ACLK_133_RATIO + 1)] = 133MHz (DIVaclk_133:ACLK_133_RATIO=5)
         * MOUTonenand = MOUTonenand_1 = ACLK_133MHz
-        * SCLK_ONENAND = [MOUTONENAND_1 /(ONENAND_RATIO  1)] = 66MHz (DIVonenand:ONENAND_RATIO=1)
+        * SCLK_ONENAND = [MOUTONENAND_1 /(ONENAND_RATIO + 1)] = 66MHz (DIVonenand:ONENAND_RATIO=1)
         */
    clr = ACLK_400_MCUISP_RATIO(7) | ACLK_200_RATIO(7) | ACLK_266_GPS_RATIO(7) |
                ACLK_100_RATIO(15) | ACLK_160_RATIO(7) | ACLK_133_RATIO(7) |ONENAND_RATIO(7);
@@ -226,8 +226,8 @@ void system_clock_init(void)
        /*
         * Set CLK_DIV_LEFTBUS
         * MOUTgdl = SCLKmpll = 800 MHz
-        * ACLK_GDL = MOUTgdl/(GDL_RATIO  1) = 200MHz (DIVgdl:GDL_RATIO=3)
-        * ACLK_GPL = ACLK_GDL/(GPL_RATIO  1) = 100MHz (DIVgpl:GPL_RATIO=1)
+        * ACLK_GDL = MOUTgdl/(GDL_RATIO + 1) = 200MHz (DIVgdl:GDL_RATIO=3)
+        * ACLK_GPL = ACLK_GDL/(GPL_RATIO + 1) = 100MHz (DIVgpl:GPL_RATIO=1)
         */
    clr = GDL_RATIO(7) | GPL_RATIO(7) ;
    set = GDL_RATIO(3) | GPL_RATIO(1) ;
@@ -241,8 +241,8 @@ void system_clock_init(void)
        /*
         * Set CLK_DIV_RIGHTBUS
         * MOUTgdr = SCLKmpll = 800 MHz
-        * ACLK_GDR = MOUTgdr/(GDR_RATIO  1) = 200MHz (DIVgdl:GDR_RATIO=3)
-        * ACLK_GPL = ACLK_GDL/(GPR_RATIO  1) = 100MHz (DIVgpl:GPR_RATIO=1)
+        * ACLK_GDR = MOUTgdr/(GDR_RATIO + 1) = 200MHz (DIVgdl:GDR_RATIO=3)
+        * ACLK_GPL = ACLK_GDL/(GPR_RATIO + 1) = 100MHz (DIVgpl:GPR_RATIO=1)
         */
    clr = GDR_RATIO(7) | GPR_RATIO(7) ;
    set = GDR_RATIO(3) | GPR_RATIO(1) ;
@@ -258,7 +258,7 @@ void system_clock_init(void)
        /*
         * MOUTuart0-4 = SCLKMPLL_USER_T =800MHz
         *
-        * SCLK_UARTx = MOUTuartX / (UARTx_RATIO  1) = 100MHz (DIVuart0-4:UARTx_RATIO=7)
+        * SCLK_UARTx = MOUTuartX / (UARTx_RATIO + 1) = 100MHz (DIVuart0-4:UARTx_RATIO=7)
        */
    clr = UART0_RATIO(15) | UART1_RATIO(15) | UART2_RATIO(15) |
              UART3_RATIO(15) | UART4_RATIO(15);
@@ -275,10 +275,10 @@ void system_clock_init(void)
        /*
         * For MOUTmmc0-3 = 800 MHz (MPLL)
         *
-        * DOUTmmc1 = MOUTmmc1 / (ratio  1) = 100 (7)
-        * sclk_mmc1 = DOUTmmc1 / (ratio  1) = 50 (1)
-        * DOUTmmc0 = MOUTmmc0 / (ratio  1) = 100 (7)
-        * sclk_mmc0 = DOUTmmc0 / (ratio  1) = 50 (1)
+        * DOUTmmc1 = MOUTmmc1 / (ratio + 1) = 100 (7)
+        * sclk_mmc1 = DOUTmmc1 / (ratio + 1) = 50 (1)
+        * DOUTmmc0 = MOUTmmc0 / (ratio + 1) = 100 (7)
+        * sclk_mmc0 = DOUTmmc0 / (ratio + 1) = 50 (1)
        */
    set = MMC0_RATIO(7) | MMC0_PRE_RATIO(1) | MMC1_RATIO(7) |
              MMC1_PRE_RATIO(1);
@@ -295,12 +295,13 @@ void system_clock_init(void)
        /*
         * For MOUTmmc0-3 = 800 MHz (MPLL)
         *
-        * DOUTmmc3 = MOUTmmc3 / (ratio  1) = 100 (7)
-        * sclk_mmc3 = DOUTmmc3 / (ratio  1) = 50 (1)
-        * DOUTmmc2 = MOUTmmc2 / (ratio  1) = 100 (7)
-        * sclk_mmc2 = DOUTmmc2 / (ratio  1) = 50 (1)
+        * DOUTmmc3 = MOUTmmc3 / (ratio + 1) = 100 (7)
+        * sclk_mmc3 = DOUTmmc3 / (ratio + 1) = 50 (1)
+        * DOUTmmc2 = MOUTmmc2 / (ratio  + 1) = 100 (7)
+        * sclk_mmc2 = DOUTmmc2 / (ratio + 1) = 50 (1)
+        * sclk_mmc2 = DOUTmmc2 / (ratio + 1) = 20 (4)
        */
-   set = MMC2_RATIO(7) | MMC2_PRE_RATIO(1) | MMC3_RATIO(7) |
+   set = MMC2_RATIO(7) | MMC2_PRE_RATIO(4) | MMC3_RATIO(7) |
              MMC3_PRE_RATIO(1);
 
    clrsetbits_le32(&clk->div_fsys2, clr, set);
@@ -314,8 +315,8 @@ void system_clock_init(void)
        /*
         * For MOUTmmc4 = 800 MHz (MPLL)
         *
-        * DOUTmmc4 = MOUTmmc4 / (ratio  1) = 100 (7)
-        * sclk_mmc4 = DOUTmmc4 / (ratio  1) = 100 (0)
+        * DOUTmmc4 = MOUTmmc4 / (ratio + 1) = 100 (7)
+        * sclk_mmc4 = DOUTmmc4 / (ratio + 1) = 100 (0)
        */
    set = MMC4_RATIO(7) | MMC4_PRE_RATIO(0);
 

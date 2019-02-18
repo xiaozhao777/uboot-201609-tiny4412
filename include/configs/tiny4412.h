@@ -20,11 +20,11 @@
 
 #define CONFIG_SYS_DCACHE_OFF		1
 
-/* ORIGEN has 4 bank of DRAM */
-#define CONFIG_NR_DRAM_BANKS		4
+/* TINY4412 has 8 bank of DRAM */
+#define CONFIG_NR_DRAM_BANKS		8
 #define CONFIG_SYS_SDRAM_BASE		0x40000000
 #define PHYS_SDRAM_1			CONFIG_SYS_SDRAM_BASE
-#define SDRAM_BANK_SIZE			(256 << 20)	/* 256 MB */
+#define SDRAM_BANK_SIZE			(128 << 20)	/* 128 MB */
 
 /* memtest works on */
 #define CONFIG_SYS_MEMTEST_START	CONFIG_SYS_SDRAM_BASE
@@ -99,17 +99,18 @@
 #define CONFIG_SYS_MMC_ENV_DEV		0
 #define CONFIG_ENV_SIZE			(16 << 10)	/* 16 KB */
 #define RESERVE_BLOCK_SIZE		(512)
-#define BL1_SIZE			(16 << 10) /*16 K reserved for BL1*/
-#define CONFIG_ENV_OFFSET		(RESERVE_BLOCK_SIZE + BL1_SIZE)
+#define BL1_SIZE			(8 << 10) /*8 K reserved for BL1*/
+#define BL2_SIZE            (16 << 10)/*16 K reserved for BL2/SPL */
+#define CONFIG_ENV_OFFSET		(RESERVE_BLOCK_SIZE + BL1_SIZE + BL2_SIZE )
 
 #define CONFIG_SPL_LDSCRIPT	"board/samsung/common/exynos-uboot-spl.lds"
 #define CONFIG_SPL_MAX_FOOTPRINT	(14 * 1024)
 
 #define CONFIG_SYS_INIT_SP_ADDR		0x02040000
 
-/* U-Boot copy size from boot Media to DRAM.*/
+/* U-Boot copy size from SD/MMC Media to DRAM.*/
 #define COPY_BL2_SIZE		0x80000
 #define BL2_START_OFFSET	((CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)/512)
-#define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)
+#define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)  /* u-boot size is 512K*/
 
 #endif	/* __CONFIG_H */

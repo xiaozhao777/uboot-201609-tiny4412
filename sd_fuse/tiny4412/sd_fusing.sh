@@ -62,23 +62,24 @@ fi
 
 signed_bl1_position=1
 bl2_position=17
-uboot_position=49
+uboot_position=81
 tzsw_position=705
 
 #<BL1 fusing>
 echo "---------------------------------------"
 echo "BL1 fusing"
-dd iflag=dsync oflag=dsync if=./E4412_N.bl1.bin of=$1 seek=$signed_bl1_position
+#dd iflag=dsync oflag=dsync if=./E4412_N.bl1.bin of=$1 seek=$signed_bl1_position
 
-#<tiny4412-spl.bin fusing>
+#<BL2 fusing>
 echo "---------------------------------------"
-echo "tiny4412-spl.bin fusing"
-dd iflag=dsync oflag=dsync if=./tiny4412-spl.bin of=$1 seek=$bl2_position
+echo "BL2 fusing"
+dd iflag=dsync oflag=dsync if=../../spl/tiny4412-spl.bin of=$1 seek=$bl2_position
 
 #<u-boot fusing>
-#echo "---------------------------------------"
-#echo "u-boot fusing"
+echo "---------------------------------------"
+echo "u-boot fusing"
 #dd iflag=dsync oflag=dsync if=${E4412_UBOOT} of=$1 seek=$uboot_position
+dd iflag=dsync oflag=dsync if=../../u-boot.bin  of=$1 seek=$uboot_position
 
 #<TrustZone S/W fusing>
 #echo "---------------------------------------"
