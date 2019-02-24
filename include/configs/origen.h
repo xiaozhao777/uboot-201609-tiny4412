@@ -1,4 +1,3 @@
-/*
  * Copyright (C) 2011 Samsung Electronics
  *
  * Configuration settings for the SAMSUNG ORIGEN (EXYNOS4210) board.

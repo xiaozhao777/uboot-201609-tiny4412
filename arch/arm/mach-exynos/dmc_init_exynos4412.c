@@ -46,14 +46,15 @@ struct mem_timings mem = {
    .control2    = 0x00000000,
    .concontrol  = 0x0FFF301A,
    .prechconfig = 0xff000000,
-   .memcontrol  = 0x00312640,      /* Tiny4412-1306 core board  use chip0/1 */
-   .memconfig0  = 0x40e01323,      /* ROW is 15bit */
-   .memconfig1  = 0x60e01323,      /* DMC0 address up to 0xfFFFFFFF */
+   .memcontrol  = 0x00312640,      
+   .memconfig0  = 0x40e01323,     
+   .memconfig1  = 0x60e01323,    
    .dll_resync  = FORCE_DLL_RESYNC,
    .dll_on      = DLL_CONTROL_ON,
 
 };
 #else
+
 struct mem_timings mem = {
    .direct_cmd_msr = {
        DIRECT_CMD1, DIRECT_CMD2, DIRECT_CMD3, DIRECT_CMD4
@@ -179,7 +180,6 @@ static void dmc_init(struct exynos4_dmc *dmc)
    writel(DIRECT_CMD_ZQ, &dmc->directcmd);
    sdelay(0x100000);
 
-#ifndef TINY4412
    /* Chip1: NOP Command: Assert and Hold CKE to high level */
    writel((DIRECT_CMD_NOP | DIRECT_CMD_CHIP1_SHIFT), &dmc->directcmd);
    sdelay(0x100000);
@@ -191,7 +191,6 @@ static void dmc_init(struct exynos4_dmc *dmc)
    /* Chip1: ZQINIT */
    writel((DIRECT_CMD_ZQ | DIRECT_CMD_CHIP1_SHIFT), &dmc->directcmd);
    sdelay(0x100000);
-#endif
 
    phy_control_reset(1, dmc);
    sdelay(0x100000);

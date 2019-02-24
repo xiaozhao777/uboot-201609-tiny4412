@@ -11,9 +11,6 @@
 
 #include <configs/exynos4-common.h>
 
-/*TIZEN THOR downloader support*/
-#undef CONFIG_CMD_THOR_DOWNLOAD
-#undef CONFIG_USB_FUNCTION_THOR
 
 /* High Level Configuration Options */
 #define TINY4412         1
@@ -21,26 +18,30 @@
 #define CONFIG_SYS_DCACHE_OFF		1
 
 /* TINY4412 has 8 bank of DRAM */
-#define CONFIG_NR_DRAM_BANKS		8
+#define CONFIG_NR_DRAM_BANKS		4
 #define CONFIG_SYS_SDRAM_BASE		0x40000000
 #define PHYS_SDRAM_1			CONFIG_SYS_SDRAM_BASE
-#define SDRAM_BANK_SIZE			(128 << 20)	/* 128 MB */
+#define SDRAM_BANK_SIZE			    0x10000000   /*(256 << 20)	 256 MB */
 
 /* memtest works on */
 #define CONFIG_SYS_MEMTEST_START	CONFIG_SYS_SDRAM_BASE
-#define CONFIG_SYS_MEMTEST_END		(CONFIG_SYS_SDRAM_BASE + 0x6000000)
-#define CONFIG_SYS_LOAD_ADDR		(CONFIG_SYS_SDRAM_BASE + 0x3E00000)
+#define CONFIG_SYS_MEMTEST_END		(CONFIG_SYS_SDRAM_BASE + 0x5e00000)
+#define CONFIG_SYS_LOAD_ADDR		(CONFIG_SYS_SDRAM_BASE + 0x3e00000)
 
 #define CONFIG_SYS_TEXT_BASE		0x43E00000
+
+/* // #define CONFIG_SYS_INIT_SP_ADDR   (COMFIG_SYS_TEXT_BASE-0x1000000) */
+#define CONFIG_SYS_INIT_SP_ADDR     0x42E00000
 
 #define CONFIG_MACH_TYPE		MACH_TYPE_TINY4412
 
 /* select serial console configuration */
-#define CONFIG_SERIAL2
+
+
 #define CONFIG_BAUDRATE			115200
 
 /* Console configuration */
-#define CONFIG_DEFAULT_CONSOLE		"console=ttySAC1,115200n8\0"
+#define CONFIG_DEFAULT_CONSOLE		"console=ttySAC0,115200n8\0"
 
 #define CONFIG_SYS_MEM_TOP_HIDE	(1 << 20)	/* ram console */
 
@@ -90,10 +91,10 @@
 	"fi;" \
 	"load mmc ${mmcdev} ${loadaddr} uImage; bootm ${loadaddr} "
 
-#define CONFIG_CLK_1000_400_200
+/* // #define CONFIG_CLK_1000_400_200 */
 
 /* MIU (Memory Interleaving Unit) */
-#define CONFIG_MIU_2BIT_21_7_INTERLEAVED
+/* // #define CONFIG_MIU_2BIT_21_7_INTERLEAVED */
 
 #define CONFIG_ENV_IS_IN_MMC
 #define CONFIG_SYS_MMC_ENV_DEV		0
@@ -106,9 +107,8 @@
 #define CONFIG_SPL_LDSCRIPT	"board/samsung/common/exynos-uboot-spl.lds"
 #define CONFIG_SPL_MAX_FOOTPRINT	(14 * 1024)
 
-#define CONFIG_SYS_INIT_SP_ADDR		0x02040000
 
-/* U-Boot copy size from SD/MMC Media to DRAM.*/
+/* U-Boot copy size from boot Media to DRAM.*/
 #define COPY_BL2_SIZE		0x80000
 #define BL2_START_OFFSET	((CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)/512)
 #define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)  /* u-boot size is 512K*/
