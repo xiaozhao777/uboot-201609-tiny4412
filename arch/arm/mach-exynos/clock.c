@@ -1688,8 +1688,8 @@ unsigned long get_mmc_clk(int dev_index)
 void set_mmc_clk(int dev_index, unsigned int div)
 {
 	/* If want to set correct value, it needs to substract one from div.*/
-	if (div > 0)
-		div -= 1;
+//	if (div > 0)
+//		div -= 1;
 
 	if (cpu_is_exynos5()) {
 		if (proid_is_exynos5420() || proid_is_exynos5422())

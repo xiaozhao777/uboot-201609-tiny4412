@@ -13,18 +13,18 @@
 / {
 	model = "FriendlyARM TINY4412 board based on Exynos4412";
 	compatible = "friendlyarm,tiny4412", "samsung,exynos4412", "samsung exynos4" ;
-
+    
   aliases {
-    serial0= "/serial@13800000";
+    serial0 = "/serial@13800000";
     console = "/serial@13800000";
     mmc2 = "/sdhci@12530000";
     mmc4 = "/dwmmc@12550000";
 	};
-
+/*
   memory {
       reg = <0x40000000 0x40000000>;
     };
-
+*/
   serial0:serial@13800000 {
 		status = "okay";
 	};
@@ -78,24 +78,20 @@
     };
 
   sdhci@12510000 {
-        compatible = "samsung,exynos4412-sdhci";
         status = "disable";
     };
 
   sdhci@12520000 {
-        compatible = "samsung,exynos4412-sdhci";
         status = "disable";
     };
 
   sdhci@12530000 {
-        compatible = "samsung,exynos4412-sdhci";
         samsung,bus-width = <4>;
         samsung,timing = <1 2 3>;
         cd-gpios = <&gpk2 2 0>;
     };
 
   sdhci@12540000 {
-        compatible = "samsung,exynos4412-sdhci";
         status = "disable";
     };
 
@@ -124,6 +120,7 @@
        compatible = "samsung,emmc-reset";
        reset-gpio = <&gpk1 2 0>;
      };
+
 };
 
 

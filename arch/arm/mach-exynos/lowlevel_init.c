@@ -225,14 +225,14 @@ int do_lowlevel_init(void)
         exynos_pinmux_config(PERIPH_ID_UART3, PINMUX_FLAG_NONE);
     #endif	
         debug_uart_init();
-#endif
         printascii("UART0 init ... OK !!!\n\r");
+#endif
 #endif
 		mem_ctrl_init(actions & DO_MEM_RESET);
 
-       #ifndef TINY4412
-       tzpc_init();
-       #endif
+#ifndef  TINY4412 
+      tzpc_init();
+#endif
 	}
 
 	return actions & DO_WAKEUP;
