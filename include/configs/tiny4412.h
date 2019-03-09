@@ -11,6 +11,7 @@
 
 #include <configs/exynos4-common.h>
 
+
 /* High Level Configuration Options */
 #define TINY4412         1
 

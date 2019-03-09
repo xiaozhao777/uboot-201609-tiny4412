@@ -229,10 +229,7 @@ int do_lowlevel_init(void)
 #endif
 #endif
 		mem_ctrl_init(actions & DO_MEM_RESET);
-
-#ifndef  TINY4412 
       tzpc_init();
-#endif
 	}
 
 	return actions & DO_WAKEUP;
